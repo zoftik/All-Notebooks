@@ -1,39 +1,75 @@
-import React from "react"; /// can import directly as component instead of react
-import img from "./assets/avengers.jpeg";
+import React from "react";
 
-class MovieCard extends React.Component {
-  render() {
-    return (
-      <div className="main">
+function MovieCard(props){
+        
+    const {movies, onIncStars, onClickFav, onClickAddtocart, onDecStars} =  props
+    const {title, plot, poster, price, rating,stars,fav,isInCart} =  props.movies;
+    
+        
+    return(
+        //Movie Card
         <div className="movie-card">
-          <div className="left">
-            <img alt="poster" src={img} />
-          </div>
-          <div className="right">
-            <div className="title">The Avengers</div>
-            <div className="plot">It is supernatural power shown in movie</div>
-            <div className="price">Rs.199</div>
 
-            <div className="footer">
-              <div className="rating">8.9</div>
-              <div className="star-dis">
-                <img className="str-btn" alt="decrease" src="https://cdn-icons-png.flaticon.com/128/56/56889.png" />
-                <img
-                  alt="star"
-                  src="https://cdn-icons-png.flaticon.com/128/2107/2107957.png"
-                  className="stars"
-                />
-                <img className="str-btn" alt="increase" src="https://cdn-icons-png.flaticon.com/128/3524/3524388.png" />
-                <span>0</span>
-              </div>
-              <button className="favourite-btn">Favorite</button>
-              <button className="cart-btn">Add To Cart</button>
+            {/**Left section of Movie Card */}
+            <div className="left">
+                <img alt="poster" src={poster} />
             </div>
-          </div>
+            
+            {/**Right section Movie Card */}
+            <div className="right">
+
+                {/**Title, plot, price of the movie */}
+                <div className="title">{title}</div>
+                <div className="plot">{plot}</div>
+                <div className="price">Rs. {price}</div>
+
+                {/**Footer starts here with ratings, stars and buttons */}
+                <div className="footer">
+                    <div className="rating">{rating}</div>
+
+                    {/**Star image with increase and decrease buttons and star count */}
+                    <div className="star-dis">
+                        <img className="str-btn" 
+                            alt="Decrease" 
+                            src="https://cdn-icons-png.flaticon.com/128/2801/2801932.png" 
+                            onClick={() => onDecStars(movies)}
+                        />
+                        <img className="stars" 
+                                alt="stars" 
+                                src="https://cdn-icons-png.flaticon.com/128/2107/2107957.png"    
+                        />
+                        <img className="str-btn" 
+                            alt="increase" 
+                            src="https://cdn-icons-png.flaticon.com/128/2997/2997933.png" 
+                            // No binding required as addStars() is an arrow function
+                            onClick={() => onIncStars(movies)}
+                        />
+                        <span className="starCount">{stars}</span>
+                    </div>
+
+                    {/**conditional rendering on Favourite button */}
+                    <button className={fav?"unfavourite-btn":"favourite-btn"}  
+                            onClick={() => onClickFav(movies)}> 
+                                
+                                {fav ? "Un-favourite":"Favourite"}
+
+                    </button>
+                        
+                    {/**Conditional Rendering on Add to Cart Button */}
+                    <button className={isInCart?"unfavourite-btn":"cart-btn"}  
+                            onClick={() => onClickAddtocart(movies)}>
+                                
+                                    {isInCart ? "Remove from Cart":"Add to Cart"}
+
+                    </button>
+                    
+                </div>
+            </div>
+
         </div>
-      </div>
-    );
-  }
+        
+    )
 }
+
 
 export default MovieCard;
